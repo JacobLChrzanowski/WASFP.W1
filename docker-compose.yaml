@@ -1,0 +1,47 @@
+version: '2'                  # this works for some reason
+
+services:
+  front:
+    build: ./webBal1
+    image: webbal1
+    container_name: webBal1
+    # volumes:
+    #     - /nginx.conf:/etc/nginx/conf.d/nginx.conf
+    ports:
+        - "80:8080"
+    environment:
+        - "NODES=web1:80 web2:80"
+
+  web1:
+    build: ./webServ1
+    image: webserv1
+    container_name: webServ1
+    ports:
+     - "81:80"
+
+  web2:
+    build: ./webServ2
+    image: webserv2
+    container_name: webServ2
+    ports:
+     - "82:80"
+
+
+  cache1img:
+    build: ./webCache1
+    image: webcache1
+
+    container_name: webCache1
+    ports:
+      - "8080:80"
+
+
+# version: '2'
+# services:
+#     front:
+#         image: strm/nginx-balancer
+#         container_name: load-balancer
+#         ports:
+#             - "80:8080"
+#         environment:
+#             - "NODES=web1:80 web2:80"
